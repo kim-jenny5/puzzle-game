@@ -18,22 +18,53 @@ import TomNookShadow from './assets/acnh/tomNook_shadow.png';
 import Board from './components/Board';
 
 export default function App() {
-  gsap.registerPlugin(useGSAP, Draggable, InertiaPlugin);
-
   const container = useRef<HTMLDivElement>(null);
   const TomNookRef = useRef<HTMLImageElement>(null);
   const IsabelleRef = useRef<HTMLImageElement>(null);
   const KkSliderRef = useRef<HTMLImageElement>(null);
   const BellBagRef = useRef<HTMLImageElement>(null);
   const LeafRef = useRef<HTMLImageElement>(null);
+  const TomNookShadowRef = useRef<HTMLImageElement>(null);
+  const IsabelleShadowRef = useRef<HTMLImageElement>(null);
+  const KkSliderShadowRef = useRef<HTMLImageElement>(null);
+  const BellBagShadowRef = useRef<HTMLImageElement>(null);
+  const LeafShadowRef = useRef<HTMLImageElement>(null);
+
+  gsap.registerPlugin(useGSAP, Draggable, InertiaPlugin);
 
   useGSAP(() => {
-    [TomNookRef, IsabelleRef, KkSliderRef, BellBagRef, LeafRef].map((ref) =>
+    [
+      [TomNookRef, TomNookShadowRef],
+      [IsabelleRef, IsabelleShadowRef],
+      [KkSliderRef, KkSliderShadowRef],
+      [BellBagRef, BellBagShadowRef],
+      [LeafRef, LeafShadowRef],
+    ].map(([ref, shadowRef]) =>
       Draggable.create(ref.current, {
         type: 'x,y',
         bounds: container.current,
         dragResistance: 0.2,
         inertia: true,
+        onDragEnd: function () {
+          const containerRect = container.current.getBoundingClientRect();
+          // const pieceRect = ref.current.getBoundingClientRect();
+          const shadowRect = shadowRef.current.getBoundingClientRect();
+
+          // const currentX = gsap.getProperty(ref.current, 'x') as number;
+          // const currentY = gsap.getProperty(ref.current, 'y') as number;
+
+          // const x = shadowRect.left - pieceRect.left - currentX;
+          // const y = shadowRect.top - pieceRect.top - currentY;
+
+          const x = shadowRect.left - containerRect.left;
+          const y = shadowRect.top - containerRect.top;
+
+          if (this.hitTest(shadowRef.current, '70%')) {
+            // console.log("it's over it!");
+            gsap.to(ref.current, { x, y, duration: 0.3 });
+            this.disable();
+          }
+        },
       }),
     );
   });
@@ -43,16 +74,16 @@ export default function App() {
       <main className='container mx-auto flex h-full h-screen w-full flex-col justify-center gap-y-8 p-10'>
         <Board ref={container}>
           {[
+            { src: TomNookShadow, ref: TomNookShadowRef, pos: 'left-[10%] top-[15%]' },
+            { src: IsabelleShadow, ref: IsabelleShadowRef, pos: 'left-[23%] top-[55%]' },
+            { src: KkSliderShadow, ref: KkSliderShadowRef, pos: 'left-[40%] top-[15%]' },
+            { src: BellBagShadow, ref: BellBagShadowRef, pos: 'left-[58%] top-[55%]' },
+            { src: LeafShadow, ref: LeafShadowRef, pos: 'left-[70%] top-[15%]' },
             { src: TomNook, ref: TomNookRef },
             { src: Isabelle, ref: IsabelleRef },
             { src: KkSlider, ref: KkSliderRef },
             { src: BellBag, ref: BellBagRef },
             { src: Leaf, ref: LeafRef },
-            { src: TomNookShadow, pos: 'left-[10%] top-[15%]' },
-            { src: IsabelleShadow, pos: 'left-[23%] top-[55%]' },
-            { src: KkSliderShadow, pos: 'left-[40%] top-[15%]' },
-            { src: BellBagShadow, pos: 'left-[58%] top-[55%]' },
-            { src: LeafShadow, pos: 'left-[70%] top-[15%]' },
           ].map(({ src, ref, pos }, i) => (
             <img
               key={i}

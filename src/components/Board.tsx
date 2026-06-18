@@ -17,7 +17,8 @@ export default function Board({ children, ref }: BoardProps) {
 
   return (
     <div className='flex w-full items-center justify-center'>
-      <div className='relative aspect-[4/3] w-full max-w-screen-lg' ref={ref}>
+      {/* <div className='relative aspect-[4/3] w-full max-w-screen-lg' ref={ref}> */}
+      <div className='relative aspect-[4/3] w-full max-w-screen-lg'>
         <div
           className='absolute inset-0 rounded-[2.5rem]'
           style={{
@@ -64,7 +65,9 @@ export default function Board({ children, ref }: BoardProps) {
                 'radial-gradient(ellipse at center, transparent 55%, rgba(100,80,20,0.20) 100%)',
             }}
           />
-          <div className='absolute inset-0'>{children}</div>
+          <div className='absolute inset-0' ref={ref}>
+            {children}
+          </div>
         </div>
       </div>
     </div>
