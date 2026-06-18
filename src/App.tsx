@@ -46,23 +46,19 @@ export default function App() {
         dragResistance: 0.2,
         inertia: true,
         onDragEnd: function () {
-          const containerRect = container.current.getBoundingClientRect();
-          // const pieceRect = ref.current.getBoundingClientRect();
+          const pieceRect = ref.current.getBoundingClientRect();
           const shadowRect = shadowRef.current.getBoundingClientRect();
 
-          // const currentX = gsap.getProperty(ref.current, 'x') as number;
-          // const currentY = gsap.getProperty(ref.current, 'y') as number;
+          const currentX = gsap.getProperty(ref.current, 'x') as number;
+          const currentY = gsap.getProperty(ref.current, 'y') as number;
 
-          // const x = shadowRect.left - pieceRect.left - currentX;
-          // const y = shadowRect.top - pieceRect.top - currentY;
-
-          const x = shadowRect.left - containerRect.left;
-          const y = shadowRect.top - containerRect.top;
+          const x = currentX + (shadowRect.left - pieceRect.left);
+          const y = currentY + (shadowRect.top - pieceRect.top);
 
           if (this.hitTest(shadowRef.current, '70%')) {
-            // console.log("it's over it!");
             gsap.to(ref.current, { x, y, duration: 0.3 });
             this.disable();
+            ref.current.classList.add('pointer-events-none');
           }
         },
       }),

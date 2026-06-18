@@ -65,7 +65,7 @@ export default function Board({ children, ref }: BoardProps) {
                 'radial-gradient(ellipse at center, transparent 55%, rgba(100,80,20,0.20) 100%)',
             }}
           />
-          <div className='absolute inset-0' ref={ref}>
+          <div className='absolute inset-0 select-none' ref={ref}>
             {children}
           </div>
         </div>
