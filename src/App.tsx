@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/Draggable';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 import BellBag from './assets/acnh/bellBag.png';
 import BellBagShadow from './assets/acnh/bellBag_shadow.png';
@@ -30,6 +30,25 @@ export default function App() {
   const BellBagShadowRef = useRef<HTMLImageElement>(null);
   const LeafShadowRef = useRef<HTMLImageElement>(null);
 
+  const pieces = [
+    { src: TomNook, ref: TomNookRef },
+    { src: Isabelle, ref: IsabelleRef },
+    { src: KkSlider, ref: KkSliderRef },
+    { src: BellBag, ref: BellBagRef },
+    { src: Leaf, ref: LeafRef },
+  ];
+
+  const initialPiecePositions = useMemo(() => {
+    return pieces.map((_, i) => {
+      const isLeftSide = i % 2 === 0;
+
+      return {
+        left: isLeftSide ? `${Math.random() * 15 + 2}%` : `${Math.random() * 15 + 78}%`,
+        top: `${Math.random() * 70 + 10}%`,
+      };
+    });
+  }, []);
+
   gsap.registerPlugin(useGSAP, Draggable, InertiaPlugin);
 
   useGSAP(() => {
@@ -42,7 +61,6 @@ export default function App() {
     ].map(([ref, shadowRef]) =>
       Draggable.create(ref.current, {
         type: 'x,y',
-        bounds: container.current,
         dragResistance: 0.2,
         inertia: true,
         onDragEnd: function () {
@@ -67,7 +85,19 @@ export default function App() {
 
   return (
     <>
-      <main className='container mx-auto flex h-full h-screen w-full flex-col justify-center gap-y-8 p-10'>
+      <main className='relative flex h-screen w-full flex-col justify-center overflow-hidden p-10'>
+        {pieces.map(({ src, ref }, i) => (
+          <img
+            key={i}
+            src={src}
+            ref={ref}
+            className='absolute z-10 w-[200px] cursor-grab'
+            style={{
+              left: initialPiecePositions[i].left,
+              top: initialPiecePositions[i].top,
+            }}
+          />
+        ))}
         <Board ref={container}>
           {[
             { src: TomNookShadow, ref: TomNookShadowRef, pos: 'left-[10%] top-[15%]' },
@@ -75,17 +105,12 @@ export default function App() {
             { src: KkSliderShadow, ref: KkSliderShadowRef, pos: 'left-[40%] top-[15%]' },
             { src: BellBagShadow, ref: BellBagShadowRef, pos: 'left-[58%] top-[55%]' },
             { src: LeafShadow, ref: LeafShadowRef, pos: 'left-[70%] top-[15%]' },
-            { src: TomNook, ref: TomNookRef },
-            { src: Isabelle, ref: IsabelleRef },
-            { src: KkSlider, ref: KkSliderRef },
-            { src: BellBag, ref: BellBagRef },
-            { src: Leaf, ref: LeafRef },
           ].map(({ src, ref, pos }, i) => (
             <img
               key={i}
               src={src}
               ref={ref}
-              className={clsx('w-[200px]', pos ? `pointer-events-none absolute ${pos}` : '')}
+              className={`pointer-events-none absolute ${pos} w-[200px]`}
             />
           ))}
         </Board>

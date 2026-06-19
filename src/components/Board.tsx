@@ -16,8 +16,7 @@ export default function Board({ children, ref }: BoardProps) {
     'radial-gradient(ellipse 60px 12px at 22% 35%, rgba(140,110,40,0.14), transparent 70%), radial-gradient(ellipse 80px 14px at 70% 65%, rgba(140,110,40,0.11), transparent 70%), radial-gradient(ellipse 40px 9px at 85% 20%, rgba(140,110,40,0.13), transparent 70%)';
 
   return (
-    <div className='flex w-full items-center justify-center'>
-      {/* <div className='relative aspect-[4/3] w-full max-w-screen-lg' ref={ref}> */}
+    <div className='flex w-full justify-center'>
       <div className='relative aspect-[4/3] w-full max-w-screen-lg'>
         <div
           className='absolute inset-0 rounded-[2.5rem]'
