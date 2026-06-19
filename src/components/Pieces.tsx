@@ -10,6 +10,7 @@ import Leaf from '../assets/acnh/leaf.png';
 import TomNook from '../assets/acnh/tomNook.png';
 
 interface PiecesProps {
+  piecesRef: RefObject<HTMLDivElement | null>;
   TomNookShadowRef: RefObject<HTMLImageElement | null>;
   IsabelleShadowRef: RefObject<HTMLImageElement | null>;
   KkSliderShadowRef: RefObject<HTMLImageElement | null>;
@@ -18,6 +19,7 @@ interface PiecesProps {
 }
 
 export default function Pieces({
+  piecesRef,
   TomNookShadowRef,
   IsabelleShadowRef,
   KkSliderShadowRef,
@@ -84,7 +86,7 @@ export default function Pieces({
   });
 
   return (
-    <>
+    <div ref={piecesRef} className='absolute inset-0 z-10'>
       {pieces.map(({ src, ref }, i) => (
         <img
           key={i}
@@ -97,6 +99,6 @@ export default function Pieces({
           }}
         />
       ))}
-    </>
+    </div>
   );
 }

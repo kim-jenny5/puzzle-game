@@ -2,10 +2,11 @@ import type { ReactNode, RefObject } from 'react';
 
 interface BoardProps {
   children?: ReactNode;
-  ref: RefObject<HTMLDivElement | null>;
+  containerRef: RefObject<HTMLDivElement | null>;
+  boardWrapperRef: RefObject<HTMLDivElement | null>;
 }
 
-export default function Board({ children, ref }: BoardProps) {
+export default function Board({ children, containerRef, boardWrapperRef }: BoardProps) {
   const frameGradient = 'linear-gradient(145deg, #d4a84a 0%, #c39a3e 40%, #a87e2e 100%)';
   const surfaceBase = 'linear-gradient(180deg, #e6c97a 0%, #dab868 50%, #cfab5a 100%)';
   const grainFine =
@@ -16,7 +17,7 @@ export default function Board({ children, ref }: BoardProps) {
     'radial-gradient(ellipse 60px 12px at 22% 35%, rgba(140,110,40,0.14), transparent 70%), radial-gradient(ellipse 80px 14px at 70% 65%, rgba(140,110,40,0.11), transparent 70%), radial-gradient(ellipse 40px 9px at 85% 20%, rgba(140,110,40,0.13), transparent 70%)';
 
   return (
-    <div className='flex w-full justify-center'>
+    <div className='flex w-full justify-center' ref={boardWrapperRef}>
       <div className='relative aspect-[4/3] w-full max-w-screen-lg'>
         <div
           className='absolute inset-0 rounded-[2.5rem]'
@@ -64,7 +65,7 @@ export default function Board({ children, ref }: BoardProps) {
                 'radial-gradient(ellipse at center, transparent 55%, rgba(100,80,20,0.20) 100%)',
             }}
           />
-          <div className='absolute inset-0 select-none' ref={ref}>
+          <div className='absolute inset-0 select-none' ref={containerRef}>
             {children}
           </div>
         </div>

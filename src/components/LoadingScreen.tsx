@@ -11,38 +11,35 @@ export default function LoadingScreen() {
     gsap.fromTo(
       ref.current,
       {
-        y: 100,
+        y: 25,
         opacity: 0,
       },
       {
         y: 0,
         opacity: 1,
         duration: 1.5,
-        // ease: 'power3.out',
         ease: 'power1.out',
       },
     );
 
     gsap.to(ref.current, {
-      y: -20,
-      duration: 1,
-      ease: 'sine.inOut',
+      y: -25,
+      duration: 1.2,
       yoyo: true,
+      ease: 'sine.inOut',
       repeat: -1,
     });
 
-    // gsap.to('.dot', {
-    //   y: -8,
-    //   duration: 1,
-    //   ease: 'sine.inOut',
-    //   yoyo: true,
-    //   repeat: -1,
-    //   repeatDelay: 0.5,
-    //   // stagger: {
-    //   //   each: 0.5,
-    //   //   repeat: -1,
-    //   // },
-    // });
+    gsap.to('.dot', {
+      keyframes: [
+        { y: 8, duration: 0.4 },
+        { y: -8, duration: 0.4 },
+        { y: 0, duration: 0.4 },
+      ],
+      ease: 'sine.inOut',
+      repeat: -1,
+      stagger: 0.15,
+    });
   });
 
   return (
