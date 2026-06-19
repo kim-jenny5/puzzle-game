@@ -28,6 +28,8 @@ export default function App() {
   const KkSliderShadowRef = useRef<HTMLImageElement>(null);
   const BellBagShadowRef = useRef<HTMLImageElement>(null);
   const LeafShadowRef = useRef<HTMLImageElement>(null);
+
+  const loadingRef = useRef<HTMLDivElement>(null);
   const boardWrapperRef = useRef<HTMLDivElement>(null);
   const piecesRef = useRef<HTMLDivElement>(null);
 
@@ -45,24 +47,40 @@ export default function App() {
     }
   }, [isLoading]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     if (!loadingRef.current) return;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!loadingRef.current) return;
 
-  //     gsap.killTweensOf(loadingRef.current);
-  //     gsap.killTweensOf('.dot');
-  //     gsap.to(loadingRef.current, {
-  //       y: -80,
-  //       opacity: 0,
-  //       duration: 0.7,
-  //       ease: 'power2.in',
-  //       onComplete: () => setIsLoading(false),
-  //     });
-  //   }, 4000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+      gsap.killTweensOf(loadingRef.current);
+      gsap.killTweensOf('.dot');
+      gsap.to(loadingRef.current, {
+        y: -80,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power2.in',
+        onComplete: () => setIsLoading(false),
+      });
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useGSAP(() => {
+    if (!loadingRef.current) return;
+
+    gsap.fromTo(
+      loadingRef.current,
+      {
+        y: 100,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.5,
+        ease: 'power1.out',
+      },
+    );
+
     gsap.to('.fruit', {
       keyframes: [
         { y: 10, duration: 0.4 },
@@ -80,7 +98,7 @@ export default function App() {
       <main className='relative flex h-screen w-full flex-col justify-center overflow-hidden bg-stone-100 p-10'>
         {isLoading ? (
           // <LoadingScreen />
-          <div className='mx-auto flex gap-x-8'>
+          <div className='mx-auto flex gap-x-8' ref={loadingRef}>
             {FRUITS.map((fruit, i) => (
               <img key={i} src={fruit} className='fruit pointer-events-none inline-block w-16' />
             ))}
