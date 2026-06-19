@@ -3,11 +3,11 @@ import { gsap } from 'gsap';
 import { Draggable } from 'gsap/Draggable';
 import { type RefObject, useMemo, useRef } from 'react';
 
-import BellBag from '../assets/acnh/bellBag.png';
-import Isabelle from '../assets/acnh/isabelle.png';
-import KkSlider from '../assets/acnh/kkSlider.png';
-import Leaf from '../assets/acnh/leaf.png';
-import TomNook from '../assets/acnh/tomNook.png';
+import BellBag from '../assets/PuzzlePieces/BellBag.svg';
+import Isabelle from '../assets/PuzzlePieces/Isabelle.svg';
+import KkSlider from '../assets/PuzzlePieces/KkSlider.svg';
+import Leaf from '../assets/PuzzlePieces/Leaf.svg';
+import TomNook from '../assets/PuzzlePieces/TomNook.svg';
 
 interface PiecesProps {
   piecesRef: RefObject<HTMLDivElement | null>;

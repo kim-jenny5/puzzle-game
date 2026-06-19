@@ -2,11 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 
-import BellBagShadow from './assets/acnh/bellBag_shadow.png';
-import IsabelleShadow from './assets/acnh/isabelle_shadow.png';
-import KkSliderShadow from './assets/acnh/kkSlider_shadow.png';
-import LeafShadow from './assets/acnh/leaf_shadow.png';
-import TomNookShadow from './assets/acnh/tomNook_shadow.png';
+import Apple from './assets/Fruits/Apple.svg';
+import Cherry from './assets/Fruits/Cherry.svg';
+import Orange from './assets/Fruits/Orange.svg';
+import Peach from './assets/Fruits/Peach.svg';
+import Pear from './assets/Fruits/Pear.svg';
+
+import BellBagShadow from './assets/PuzzlePieces/BellBag_Shadow.svg';
+import IsabelleShadow from './assets/PuzzlePieces/Isabelle_Shadow.svg';
+import KkSliderShadow from './assets/PuzzlePieces/KkSlider_Shadow.svg';
+import LeafShadow from './assets/PuzzlePieces/Leaf_Shadow.svg';
+import TomNookShadow from './assets/PuzzlePieces/TomNook_Shadow.svg';
 import Board from './components/Board';
 // import LoadingScreen from './components/LoadingScreen';
 import Pieces from './components/Pieces';
