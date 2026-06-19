@@ -17,6 +17,8 @@ import Board from './components/Board';
 // import LoadingScreen from './components/LoadingScreen';
 import Pieces from './components/Pieces';
 
+const FRUITS = [Apple, Cherry, Orange, Peach, Pear];
+
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -26,8 +28,6 @@ export default function App() {
   const KkSliderShadowRef = useRef<HTMLImageElement>(null);
   const BellBagShadowRef = useRef<HTMLImageElement>(null);
   const LeafShadowRef = useRef<HTMLImageElement>(null);
-
-  const loadingRef = useRef<HTMLHeadingElement>(null);
   const boardWrapperRef = useRef<HTMLDivElement>(null);
   const piecesRef = useRef<HTMLDivElement>(null);
 
@@ -45,52 +45,28 @@ export default function App() {
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!loadingRef.current) return;
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (!loadingRef.current) return;
 
-      gsap.killTweensOf(loadingRef.current);
-      gsap.killTweensOf('.dot');
-      gsap.to(loadingRef.current, {
-        y: -80,
-        opacity: 0,
-        duration: 0.7,
-        ease: 'power2.in',
-        onComplete: () => setIsLoading(false),
-      });
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, []);
+  //     gsap.killTweensOf(loadingRef.current);
+  //     gsap.killTweensOf('.dot');
+  //     gsap.to(loadingRef.current, {
+  //       y: -80,
+  //       opacity: 0,
+  //       duration: 0.7,
+  //       ease: 'power2.in',
+  //       onComplete: () => setIsLoading(false),
+  //     });
+  //   }, 4000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   useGSAP(() => {
-    if (!loadingRef.current) return;
-
-    gsap.fromTo(
-      loadingRef.current,
-      {
-        y: 25,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1.5,
-        ease: 'power1.out',
-      },
-    );
-
-    gsap.to(loadingRef.current, {
-      y: -25,
-      duration: 1.2,
-      yoyo: true,
-      ease: 'sine.inOut',
-      repeat: -1,
-    });
-
-    gsap.to('.dot', {
+    gsap.to('.fruit', {
       keyframes: [
-        { y: 8, duration: 0.4 },
-        { y: -8, duration: 0.4 },
+        { y: 10, duration: 0.4 },
+        { y: -10, duration: 0.4 },
         { y: 0, duration: 0.4 },
       ],
       ease: 'sine.inOut',
@@ -104,12 +80,11 @@ export default function App() {
       <main className='relative flex h-screen w-full flex-col justify-center overflow-hidden bg-stone-100 p-10'>
         {isLoading ? (
           // <LoadingScreen />
-          <h1 className='text-center font-mono text-2xl text-neutral-600' ref={loadingRef}>
-            Loading
-            <span className='dot inline-block'>.</span>
-            <span className='dot inline-block'>.</span>
-            <span className='dot inline-block'>.</span>
-          </h1>
+          <div className='mx-auto flex gap-x-8'>
+            {FRUITS.map((fruit, i) => (
+              <img key={i} src={fruit} className='fruit pointer-events-none inline-block w-16' />
+            ))}
+          </div>
         ) : (
           <>
             <Pieces
