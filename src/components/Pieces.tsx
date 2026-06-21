@@ -9,6 +9,59 @@ import KkSlider from '../assets/PuzzlePieces/KkSlider.svg';
 import Leaf from '../assets/PuzzlePieces/Leaf.svg';
 import TomNook from '../assets/PuzzlePieces/TomNook.svg';
 
+const SPARKLE_SHAPES = ['✦', '✧', '✸', '✺', '★'];
+const SPARKLE_COLORS = ['#FFD700', '#FF6B9D', '#7EB8F7', '#A8E063', '#FF9A56', '#C084FC'];
+
+// const sparkleModules = import.meta.glob<{ default: string }>('../assets/Sparkles/*.svg', {
+//   eager: true,
+// });
+// const SPARKLE_SRCS = Object.values(sparkleModules).map((m) => m.default);
+
+function spawnSparkles(piece: HTMLElement, container: HTMLElement) {
+  const pieceRect = piece.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  const cx = pieceRect.left - containerRect.left + pieceRect.width / 2;
+  const cy = pieceRect.top - containerRect.top + pieceRect.height / 2;
+
+  const shuffled = [...SPARKLE_SHAPES].sort(() => Math.random() - 0.5).slice(0, 3);
+
+  shuffled.forEach((char, i) => {
+    const size = 18 + Math.random() * 14;
+    const angle = (i / 3) * 360 + Math.random() * 60 - 30;
+    const distance = 60 + Math.random() * 50;
+    const rad = (angle * Math.PI) / 180;
+
+    const el = document.createElement('div');
+    el.textContent = char;
+    el.style.cssText = `
+      position: absolute;
+      left: ${cx - size / 2}px;
+      top: ${cy - size / 2}px;
+      font-size: ${size}px;
+      color: ${SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)]};
+      pointer-events: none;
+      z-index: 50;
+      line-height: 1;
+    `;
+    container.appendChild(el);
+
+    gsap.fromTo(
+      el,
+      { x: 0, y: 0, scale: 0.2, opacity: 1, rotate: 0 },
+      {
+        x: Math.cos(rad) * distance,
+        y: Math.sin(rad) * distance,
+        scale: 1.2,
+        opacity: 0,
+        rotate: (Math.random() - 0.5) * 300,
+        duration: 0.65 + Math.random() * 0.3,
+        ease: 'power2.out',
+        onComplete: () => el.remove(),
+      },
+    );
+  });
+}
+
 interface PiecesProps {
   piecesRef: RefObject<HTMLDivElement | null>;
   TomNookShadowRef: RefObject<HTMLImageElement | null>;
@@ -76,7 +129,12 @@ export default function Pieces({
           const y = currentY + (shadowRect.top - pieceRect.top);
 
           if (this.hitTest(shadowRef.current, '70%')) {
-            gsap.to(ref.current, { x, y, duration: 0.3 });
+            gsap.to(ref.current, {
+              x,
+              y,
+              duration: 0.3,
+              onComplete: () => spawnSparkles(ref.current, piecesRef.current!),
+            });
             this.disable();
             ref.current.classList.add('pointer-events-none');
           }

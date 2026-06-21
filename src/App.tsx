@@ -30,6 +30,7 @@ export default function App() {
   const LeafShadowRef = useRef<HTMLImageElement>(null);
 
   const loadingRef = useRef<HTMLDivElement>(null);
+  const dotsRef = useRef<HTMLParagraphElement>(null);
   const boardWrapperRef = useRef<HTMLDivElement>(null);
   const piecesRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +55,7 @@ export default function App() {
       gsap.killTweensOf(loadingRef.current);
       gsap.killTweensOf('.dot');
       gsap.to(loadingRef.current, {
-        y: -80,
+        y: -100,
         opacity: 0,
         duration: 0.7,
         ease: 'power2.in',
@@ -76,7 +77,7 @@ export default function App() {
       {
         y: 0,
         opacity: 1,
-        duration: 1.5,
+        duration: 1.5 + Math.random() * 0.5,
         ease: 'power1.out',
       },
     );
@@ -91,6 +92,19 @@ export default function App() {
       repeat: -1,
       stagger: 0.15,
     });
+
+    let dotCount = 0;
+    gsap.to(
+      {},
+      {
+        duration: 0.4,
+        repeat: -1,
+        onRepeat: () => {
+          dotCount = (dotCount + 1) % 4;
+          if (dotsRef.current) dotsRef.current.textContent = 'Loading' + '.'.repeat(dotCount);
+        },
+      },
+    );
   });
 
   return (
@@ -98,10 +112,15 @@ export default function App() {
       <main className='relative flex h-screen w-full flex-col justify-center overflow-hidden bg-stone-100 p-10'>
         {isLoading ? (
           // <LoadingScreen />
-          <div className='mx-auto flex gap-x-8' ref={loadingRef}>
-            {FRUITS.map((fruit, i) => (
-              <img key={i} src={fruit} className='fruit pointer-events-none inline-block w-16' />
-            ))}
+          <div className='flex flex-col items-center gap-y-8' ref={loadingRef}>
+            <div className='mx-auto flex gap-x-8'>
+              {FRUITS.map((fruit, i) => (
+                <img key={i} src={fruit} className='fruit pointer-events-none inline-block w-12' />
+              ))}
+            </div>
+            <p className='font-mono text-lg' ref={dotsRef}>
+              Loading
+            </p>
           </div>
         ) : (
           <>
