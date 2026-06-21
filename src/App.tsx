@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
+import { useEffect, useRef, useState } from 'react';
 
 import Apple from './assets/Fruits/Apple.svg';
 import Cherry from './assets/Fruits/Cherry.svg';
 import Orange from './assets/Fruits/Orange.svg';
 import Peach from './assets/Fruits/Peach.svg';
 import Pear from './assets/Fruits/Pear.svg';
-
 import BellBagShadow from './assets/PuzzlePieces/BellBag_Shadow.svg';
 import IsabelleShadow from './assets/PuzzlePieces/Isabelle_Shadow.svg';
 import KkSliderShadow from './assets/PuzzlePieces/KkSlider_Shadow.svg';
@@ -110,7 +109,7 @@ export default function App() {
   return (
     <>
       <main className='relative flex h-screen w-full flex-col justify-center overflow-hidden bg-stone-100 p-10'>
-        {isLoading ? (
+        {/* {isLoading ? (
           // <LoadingScreen />
           <div className='flex flex-col items-center gap-y-8' ref={loadingRef}>
             <div className='mx-auto flex gap-x-8'>
@@ -122,34 +121,34 @@ export default function App() {
               Loading
             </p>
           </div>
-        ) : (
-          <>
-            <Pieces
-              piecesRef={piecesRef}
-              TomNookShadowRef={TomNookShadowRef}
-              IsabelleShadowRef={IsabelleShadowRef}
-              KkSliderShadowRef={KkSliderShadowRef}
-              BellBagShadowRef={BellBagShadowRef}
-              LeafShadowRef={LeafShadowRef}
-            />
-            <Board containerRef={containerRef} boardWrapperRef={boardWrapperRef}>
-              {[
-                { src: TomNookShadow, ref: TomNookShadowRef, pos: 'left-[10%] top-[15%]' },
-                { src: IsabelleShadow, ref: IsabelleShadowRef, pos: 'left-[23%] top-[55%]' },
-                { src: KkSliderShadow, ref: KkSliderShadowRef, pos: 'left-[40%] top-[15%]' },
-                { src: BellBagShadow, ref: BellBagShadowRef, pos: 'left-[58%] top-[55%]' },
-                { src: LeafShadow, ref: LeafShadowRef, pos: 'left-[70%] top-[15%]' },
-              ].map(({ src, ref, pos }, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  ref={ref}
-                  className={`pointer-events-none absolute ${pos} w-[200px]`}
-                />
-              ))}
-            </Board>
-          </>
-        )}
+        ) : ( */}
+        <>
+          <Pieces
+            piecesRef={piecesRef}
+            TomNookShadowRef={TomNookShadowRef}
+            IsabelleShadowRef={IsabelleShadowRef}
+            KkSliderShadowRef={KkSliderShadowRef}
+            BellBagShadowRef={BellBagShadowRef}
+            LeafShadowRef={LeafShadowRef}
+          />
+          <Board containerRef={containerRef} boardWrapperRef={boardWrapperRef}>
+            {[
+              { src: TomNookShadow, ref: TomNookShadowRef, pos: 'left-[10%] top-[15%]' },
+              { src: IsabelleShadow, ref: IsabelleShadowRef, pos: 'left-[23%] top-[55%]' },
+              { src: KkSliderShadow, ref: KkSliderShadowRef, pos: 'left-[40%] top-[15%]' },
+              { src: BellBagShadow, ref: BellBagShadowRef, pos: 'left-[58%] top-[55%]' },
+              { src: LeafShadow, ref: LeafShadowRef, pos: 'left-[70%] top-[15%]' },
+            ].map(({ src, ref, pos }, i) => (
+              <img
+                key={i}
+                src={src}
+                ref={ref}
+                className={`pointer-events-none absolute ${pos} w-[200px]`}
+              />
+            ))}
+          </Board>
+        </>
+        {/* )} */}
       </main>
     </>
   );
