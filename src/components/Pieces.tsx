@@ -69,6 +69,7 @@ interface PiecesProps {
   KkSliderShadowRef: RefObject<HTMLImageElement | null>;
   BellBagShadowRef: RefObject<HTMLImageElement | null>;
   LeafShadowRef: RefObject<HTMLImageElement | null>;
+  onAllPiecesPlaced: () => void;
 }
 
 export default function Pieces({
@@ -78,12 +79,15 @@ export default function Pieces({
   KkSliderShadowRef,
   BellBagShadowRef,
   LeafShadowRef,
+  onAllPiecesPlaced,
 }: PiecesProps) {
   const TomNookRef = useRef<HTMLImageElement>(null);
   const IsabelleRef = useRef<HTMLImageElement>(null);
   const KkSliderRef = useRef<HTMLImageElement>(null);
   const BellBagRef = useRef<HTMLImageElement>(null);
   const LeafRef = useRef<HTMLImageElement>(null);
+
+  const placedCount = useRef(0);
 
   const pieces = [
     { src: TomNook, ref: TomNookRef },
@@ -133,7 +137,11 @@ export default function Pieces({
               x,
               y,
               duration: 0.3,
-              onComplete: () => spawnSparkles(ref.current),
+              onComplete: () => {
+                spawnSparkles(ref.current);
+                placedCount.current += 1;
+                if (placedCount.current === pieces.length) onAllPiecesPlaced();
+              },
             });
             this.disable();
             ref.current.classList.add('pointer-events-none');

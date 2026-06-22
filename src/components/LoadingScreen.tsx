@@ -43,7 +43,7 @@ export default function LoadingScreen() {
   });
 
   return (
-    <h1 className='text-center font-mono text-2xl text-neutral-600' ref={ref}>
+    <h1 ref={ref} className='text-center font-mono text-2xl text-neutral-600'>
       Loading
       <span className='dot inline-block'>.</span>
       <span className='dot inline-block'>.</span>

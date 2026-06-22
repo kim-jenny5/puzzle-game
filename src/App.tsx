@@ -28,6 +28,9 @@ export default function App() {
   const BellBagShadowRef = useRef<HTMLImageElement>(null);
   const LeafShadowRef = useRef<HTMLImageElement>(null);
 
+  const starRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const textBoxRef = useRef<HTMLDivElement>(null);
   const loadingRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<HTMLParagraphElement>(null);
   const boardWrapperRef = useRef<HTMLDivElement>(null);
@@ -106,9 +109,51 @@ export default function App() {
     );
   });
 
+  const onAllPiecesPlaced = () => {
+    const tl = gsap.timeline();
+    tl.to(overlayRef.current, { opacity: 0.6, duration: 0.8, ease: 'power2.out' })
+      .to(starRef.current, {
+        opacity: 1,
+        duration: 2.5,
+        ease: 'power3.out',
+        x: '100vw',
+        zIndex: 50,
+      })
+      .fromTo(
+        textBoxRef.current,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+        '<',
+      );
+  };
+
+  const handleClick = () => window.location.reload();
+
   return (
     <>
+      <div
+        ref={starRef}
+        className='absolute flex h-screen w-screen items-center text-9xl opacity-0'
+      >
+        ⭐
+      </div>
       <main className='relative flex h-screen w-full flex-col justify-center overflow-hidden bg-stone-100 p-10'>
+        <div
+          ref={overlayRef}
+          className='pointer-events-none absolute inset-0 z-20 bg-black opacity-0'
+        />
+        <div
+          ref={textBoxRef}
+          className='absolute top-1/2 left-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-y-5 opacity-0'
+        >
+          <p className='font-mono text-3xl font-semibold text-white'>Yay! Play again?</p>
+          <button
+            onClick={handleClick}
+            className='cursor-pointer rounded-full bg-white px-8 py-2.5 font-mono text-sm text-neutral-800 transition-opacity hover:opacity-75'
+          >
+            Refresh
+          </button>
+        </div>
         {/* {isLoading ? (
           // <LoadingScreen />
           <div className='flex flex-col items-center gap-y-8' ref={loadingRef}>
@@ -130,6 +175,7 @@ export default function App() {
             KkSliderShadowRef={KkSliderShadowRef}
             BellBagShadowRef={BellBagShadowRef}
             LeafShadowRef={LeafShadowRef}
+            onAllPiecesPlaced={onAllPiecesPlaced}
           />
           <Board containerRef={containerRef} boardWrapperRef={boardWrapperRef}>
             {[
