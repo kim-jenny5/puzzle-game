@@ -123,6 +123,8 @@ export default function Pieces({
         dragResistance: 0.2,
         inertia: true,
         onDragEnd: function () {
+          if (!ref.current || !shadowRef.current) return;
+
           const pieceRect = ref.current.getBoundingClientRect();
           const shadowRect = shadowRef.current.getBoundingClientRect();
 
