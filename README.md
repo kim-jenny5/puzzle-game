@@ -1,73 +1,26 @@
-# React + TypeScript + Vite
+# Animal Crossing Puzzle Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A drag-and-drop puzzle game built with React and GSAP, with Animal Crossing characters!
 
-Currently, two official plugins are available:
+Built as a personal project to practice GSAP, exploring animations, timelines, physics plugins, and the `useGSAP` hook in a React + TypeScript / Vite setup.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+> **Disclaimer:** This project is for learning purposes only and is not affiliated with or endorsed by Nintendo. All Animal Crossing characters and assets are the intellectual property of Nintendo Co., Ltd.
 
-## React Compiler
+## How it works
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Puzzle pieces (Tom Nook, Isabelle, KK Slider, and friends) are scattered on either side of the board. Drag each piece onto its matching shadow to place it. Place them all to complete the game.
 
-## Expanding the ESLint configuration
+## Tech
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** + **TypeScript**
+- **GSAP** — drag-and-drop via `Draggable`, physics-based sparkle particles via `Physics2DPlugin`, sequenced animations via timelines and `useGSAP`
+- **Tailwind CSS v4**
+- **Vite**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+- Loading screen with staggered fruit animations and a dot counter driven by a GSAP ticker
+- Inertia-based dragging with a 70% overlap threshold for snapping pieces to their targets
+- Sparkle burst on each successful placement
+- Victory sequence: screen dim → star sweep → play-again prompt, composed as a single GSAP timeline
+- Components scoped with `useGSAP`'s `scope` option to keep selector targeting isolated
