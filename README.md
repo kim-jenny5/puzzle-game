@@ -22,5 +22,5 @@ Puzzle pieces (Tom Nook, Isabelle, KK Slider, and friends) are scattered on eith
 - Loading screen with staggered fruit animations and a dot counter driven by a GSAP ticker
 - Inertia-based dragging with a 70% overlap threshold for snapping pieces to their targets
 - Sparkle burst on each successful placement
-- Victory sequence: screen dim → star sweep → play-again prompt, composed as a single GSAP timeline
+- Victory sequence: screen dim → play-again prompt, composed as a single GSAP timeline
 - Components scoped with `useGSAP`'s `scope` option to keep selector targeting isolated
