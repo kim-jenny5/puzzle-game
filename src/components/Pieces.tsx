@@ -125,28 +125,31 @@ export default function Pieces({
         onDragEnd: function () {
           if (!ref.current || !shadowRef.current) return;
 
-          const pieceRect = ref.current.getBoundingClientRect();
-          const shadowRect = shadowRef.current.getBoundingClientRect();
+          const piece = ref.current;
+          const shadow = shadowRef.current;
 
-          const currentX = gsap.getProperty(ref.current, 'x') as number;
-          const currentY = gsap.getProperty(ref.current, 'y') as number;
+          const pieceRect = piece.getBoundingClientRect();
+          const shadowRect = shadow.getBoundingClientRect();
+
+          const currentX = gsap.getProperty(piece, 'x') as number;
+          const currentY = gsap.getProperty(piece, 'y') as number;
 
           const x = currentX + (shadowRect.left - pieceRect.left);
           const y = currentY + (shadowRect.top - pieceRect.top);
 
-          if (this.hitTest(shadowRef.current, '70%')) {
-            gsap.to(ref.current, {
+          if (this.hitTest(shadow, '70%')) {
+            gsap.to(piece, {
               x,
               y,
               duration: 0.3,
               onComplete: () => {
-                spawnSparkles(ref.current);
+                spawnSparkles(piece);
                 placedCount.current += 1;
                 if (placedCount.current === pieces.length) onAllPiecesPlaced();
               },
             });
             this.disable();
-            ref.current.classList.add('pointer-events-none');
+            piece.classList.add('pointer-events-none');
           }
         },
       }),
