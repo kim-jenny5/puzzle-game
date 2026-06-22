@@ -30,7 +30,7 @@ export default function LoadingScreen({ isLoading, onLoadComplete }: LoadingScre
       });
     }, 4000);
     return () => clearTimeout(timer);
-  }, []);
+  });
 
   useGSAP(
     () => {
