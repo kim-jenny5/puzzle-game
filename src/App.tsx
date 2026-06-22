@@ -9,6 +9,7 @@ import TomNookShadow from './assets/PuzzlePieces/TomNook_Shadow.svg';
 import Board from './components/Board';
 import LoadingScreen from './components/LoadingScreen';
 import Pieces from './components/Pieces';
+import VictoryOverlay from './components/VictoryOverlay';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -39,11 +40,7 @@ export default function App() {
 
   return (
     <main className='relative flex h-screen w-full flex-col justify-center overflow-hidden bg-stone-100 p-10'>
-      <LoadingScreen
-        isLoading={isLoading}
-        gameComplete={gameComplete}
-        onLoadComplete={() => setIsLoading(false)}
-      />
+      <LoadingScreen isLoading={isLoading} onLoadComplete={() => setIsLoading(false)} />
       {!isLoading && (
         <>
           <Pieces
@@ -73,6 +70,7 @@ export default function App() {
           </Board>
         </>
       )}
+      <VictoryOverlay gameComplete={gameComplete} />
     </main>
   );
 }
